@@ -27,10 +27,10 @@
     <ClInclude Include="appmain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\base64.h">
+    <ClInclude Include="base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\QTool.h">
+    <ClInclude Include="QTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,10 +44,10 @@
     <ClCompile Include="appmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\base64.cpp">
+    <ClCompile Include="base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\QTool.cpp">
+    <ClCompile Include="QTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,6 +55,6 @@
     <Library Include="CQP.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\cn.one-story.emdice.json" />
+    <None Include="cn.one-story.emdice.json" />
   </ItemGroup>
 </Project>

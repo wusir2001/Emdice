@@ -77,16 +77,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="appmain.h" />
-    <ClInclude Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\base64.h" />
-    <ClInclude Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\QTool.h" />
+    <ClInclude Include="base64.h" />
+    <ClInclude Include="QTool.h" />
     <ClInclude Include="cqp.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="appmain.cpp" />
-    <ClCompile Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\base64.cpp" />
-    <ClCompile Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\QTool.cpp" />
+    <ClCompile Include="base64.cpp" />
+    <ClCompile Include="QTool.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -104,7 +104,7 @@
     <Library Include="CQP.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\DWCH\source\repos\EmDiceBot\EmDiceBot\cn.one-story.emdice.json" />
+    <None Include="cn.one-story.emdice.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
