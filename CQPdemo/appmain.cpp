@@ -586,6 +586,8 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 					can = can * 10 + msg[sp] - '0', ++sp;
 				if (result == 1)
 					ret += " 大成功！";
+				else if (result == 100)
+					ret += "大失败。";
 				else if (result <= can / 5)
 					ret += " 极难成功！";
 				else if (result <= can / 2)
@@ -594,8 +596,6 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 					ret += " 常规成功！";
 				else if (result >= 96 && can < 50)
 					ret += " 大失败。";
-				else if (result == 100)
-					ret += "大失败。";
 				else ret += " 未通过。";
 				CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 				return EVENT_BLOCK;
