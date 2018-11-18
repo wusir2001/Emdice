@@ -257,9 +257,12 @@ void atname(int64_t fromQQ, int64_t fromGroup)
 	}
 }
 
-const char* getjrrp(int64_t fromQQ)
+const char* getjrrp(int64_t fromQQ, int64_t fromGroup=0)
 {
-	atname(fromQQ);
+	if(fromGroup==0)
+		atname(fromQQ);
+	else
+		atname(fromQQ, fromGroup);
 	ret += " 今天的运势指数是 ";
 	char tmp[7];
 	_i64toa_s(jrrpmap[fromQQ].jrrp, tmp, 7, 10);
@@ -270,7 +273,7 @@ const char* getjrrp(int64_t fromQQ)
 	return ret.data();
 }
 
-const char* rDice(int64_t fromQQ, int32_t range, int32_t num)
+const char* rDice(int64_t fromQQ, int32_t range, int32_t num, int64_t fromGroup=0)
 {
 	char tmp[12];
 	int32_t res = 0;
@@ -278,7 +281,10 @@ const char* rDice(int64_t fromQQ, int32_t range, int32_t num)
 	num = (num == 0) ? 1 : num;
 	uniform_int_distribution<> u(1, range);
 	//使用u(mt)调取随机数
-	atname(fromQQ);
+	if(fromGroup==0)
+		atname(fromQQ);
+	else
+		atname(fromQQ, fromGroup);
 	ret += " 投掷 ";
 	_i64toa_s(num, tmp, 12, 10);
 	ret += tmp;
@@ -402,13 +408,249 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 * Type=2 群消息
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))
+	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))//判断是否为命令
 	{
-		int sp = 2;
+		int32_t sp = 2;
 		if (msg[0] == '.')
 			sp = 1;
-		if (msg[sp] == 'E'&&msg[sp + 1] == 'm'&&msg[sp + 2] == '\0')
+
+		if (msg[sp] == 'f'&&msg[sp + 1] == 'k'&&msg[sp + 2] == 'u'&&msg[sp + 3] == '\0')//。fku
+		{
+/*			test();
+			for (int i = 1; i <= 100; ++i)
+			{
+				char tmp[8];
+				_i64toa_s(record[i], tmp, 8, 10);
+				CQ_sendPrivateMsg(ac, fromQQ, tmp);
+			}*/
+			CQ_sendGroupMsg(ac, fromGroup, fku(fromQQ));
+			return EVENT_BLOCK;
+		}
+
+		if (msg[sp] == 'E'&&msg[sp + 1] == 'm'&&msg[sp + 2] == '\0')//。Em
+		{
 			CQ_sendGroupMsg(ac, fromGroup, "*EmDice Alive");
+			return EVENT_BLOCK;
+		}
+
+		if (msg[sp] == 'j'&&msg[sp + 1] == 'r'&&msg[sp + 2] == 'r'&&msg[sp + 3] == 'p'&&msg[sp + 4] == '\0')
+		{
+			updatejrrp(fromQQ);
+			CQ_sendGroupMsg(ac, fromGroup, getjrrp(fromQQ, fromGroup));
+			return EVENT_BLOCK;
+		}
+
+		if (msg[sp] == 'n'&&msg[sp + 1] == 'n')//。nn系列
+		{
+			sp += 2;
+			while (msg[sp] == ' ')
+				++sp;
+			if (msg[sp] == '\0')
+				CQ_sendGroupMsg(ac, fromGroup, nnDelete(fromQQ));
+			else
+			{
+				string tmp;
+				while (msg[sp] != '\0'&&msg[sp] != '\n')
+					tmp += msg[sp], ++sp;
+				CQ_sendGroupMsg(ac, fromGroup, nnAdd(fromQQ, tmp));
+			}
+			return EVENT_BLOCK;
+		}
+
+		if (msg[sp] == 'd')//。d默认骰子
+		{
+			++sp;
+			atname(fromQQ, fromGroup);
+			if (msg[sp] == '\0')
+			{
+				defaultDice[fromQQ] = 100;
+				ret += " 恢复默认设置100";
+				CQ_sendGroupMsg(ac, fromGroup, ret.data());
+				return EVENT_BLOCK;
+			}
+			int32_t endp = sp;
+			while (isdigit(msg[endp]))
+				++endp;
+			if (msg[endp] != '\0')
+				return EVENT_IGNORE;
+			if (endp - sp > 3)
+			{
+				ret += " 设置失败，超出范围！范围：1 - 100！";
+				CQ_sendGroupMsg(ac, fromGroup, ret.data());
+				return EVENT_BLOCK;
+			}
+			int32_t diceNum = msg[sp] - '0';
+			for (++sp; sp < endp; ++sp)
+				diceNum = diceNum * 10 + msg[sp] - '0';
+			if (diceNum > 100 || diceNum == 0)
+			{
+				ret += " 设置失败，超出范围！范围：1 - 100！";
+				CQ_sendGroupMsg(ac, fromGroup, ret.data());
+				return EVENT_BLOCK;
+			}
+			defaultDice[fromQQ] = diceNum;
+			char tmp[6];
+			_i64toa_s(diceNum, tmp, 6, 10);
+			ret += " 设置默认骰子为";
+			ret += tmp;
+			CQ_sendGroupMsg(ac, fromGroup, ret.data());
+			return EVENT_BLOCK;
+		}
+
+		if (msg[sp] == 'c'&&msg[sp + 1] == 'o'&&msg[sp + 2] == 'c')//coc 7
+		{
+			sp += 3;
+			int32_t times = 0;
+			char tmp[6];
+			atname(fromQQ, fromGroup);
+			uniform_int_distribution<> u(1, 6);
+			ret += " 投掷COC 7版 属性：\n";
+			while (msg[sp] == ' ')
+				++sp;
+			if (isdigit(msg[sp]))
+				times = msg[sp] - '0', ++sp;
+			if (isdigit(msg[sp]))
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "*超出范围！范围：1 - 5");
+				return EVENT_BLOCK;
+			}
+			if (times > 5)
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "*超出范围！范围：1 - 5");
+				return EVENT_BLOCK;
+			}
+			if (times == 0)
+				++times;
+			for (int32_t i = 1; i <= times; ++i)//力量 敏捷 体质 外表 意志 智力 体型 教育 幸运
+				//力量 敏捷 体质 外表 意志 幸运为3d6再乘以5，智力 体型 教育为2d6+6再乘以5
+			{
+				int32_t quality[10] = { (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + u(mt)) * 5 };
+				quality[9] = quality[0] + quality[1] + quality[2] + quality[3] + quality[4] + quality[5] + quality[6] + quality[7];
+				for (int32_t i = 0; i < 9; ++i)
+				{
+					ret += coc7[i];
+					ret += " ";
+					_i64toa_s(quality[i], tmp, 6, 10);
+					ret += tmp;
+					if (i != 8)
+						ret += ' ';
+				}
+				ret += "\n总和：";
+				_i64toa_s(quality[9], tmp, 6, 10);
+				ret += tmp;
+				ret += " + ";
+				_i64toa_s(quality[8], tmp, 6, 10);
+				ret += tmp;
+				if (i != times)
+					ret += "\n";
+			}
+			string toQQ = ret;
+			atme(fromQQ);
+			ret += " 已发送至私聊，请到私聊查看！";
+			CQ_sendGroupMsg(ac, fromGroup, ret.data());
+			CQ_sendPrivateMsg(ac, fromQQ, toQQ.data());
+			return EVENT_BLOCK;
+		}
+
+		if (msg[sp] == 'r')//扔骰子
+		{
+			++sp;
+			if ((msg[sp] == 'c'))//rc技能检定
+			{
+				char tmp[6];
+				++sp;
+				atname(fromQQ, fromGroup);
+				uniform_int_distribution<> u(1, 100);
+				int32_t result = u(mt), can=0;
+				_i64toa_s(result, tmp, 6, 10);
+				ret += " 进行技能检定：";
+				ret += tmp;
+				ret += " ";
+				while (msg[sp] == ' ')
+					++sp;
+				while (!isdigit(msg[sp]))
+					ret += msg[sp], ++sp;
+				while (msg[sp] == ' ')
+					++sp;
+				while (isdigit(msg[sp]))
+					can = can * 10 + msg[sp] - '0', ++sp;
+				if (result == 1)
+					ret += " 大成功！";
+				else if (result == 100)
+					ret += "大失败。";
+				else if (result <= can / 5)
+					ret += " 极难成功！";
+				else if (result <= can / 2)
+					ret += " 困难成功！";
+				else if (result <= can)
+					ret += " 常规成功！";
+				else if (result >= 96 && can < 50)
+					ret += " 大失败。";
+				else ret += " 未通过。";
+				CQ_sendGroupMsg(ac, fromGroup, ret.data());
+				return EVENT_BLOCK;
+			}
+			if ((msg[sp] == 'b' || msg[sp] == 'p') && msg[sp + 1] == '\0')//b=奖励 p=惩罚
+			{
+				char tmp[6];
+				atname(fromQQ, fromGroup);
+				uniform_int_distribution<> u(1, 100);
+				int32_t d100 = u(mt), d10 = u(mt) % 10, m10 = d100 % 10, m100 = (d100 - m10) / 10;
+				++d10;
+				ret += " 投掷";
+				ret += (msg[sp] == 'b') ? "奖励" : "惩罚";
+				ret += "骰：";
+				_i64toa_s(d100, tmp, 6, 10);
+				ret += tmp;
+				ret += "、";
+				_i64toa_s(d10, tmp, 6, 10);
+				ret += tmp;
+				if (m10 != 0 && d10 == 10)
+					d10 = 0;
+				d100 = ((msg[sp] == 'b') ? min(m100, d10) : max(m100, d10)) * 10 + m10;
+				ret += " = ";
+				_i64toa_s(d100, tmp, 6, 10);
+				ret += tmp;
+				CQ_sendGroupMsg(ac, fromGroup, ret.data());
+				return EVENT_BLOCK;
+			}
+			int32_t num = 0;
+			while (isdigit(msg[sp]))
+				num = num * 10 + msg[sp] - '0', ++sp;
+			if (msg[sp] != 'd')
+				return EVENT_IGNORE;
+			++sp;
+			int32_t range = 0;
+			while (isdigit(msg[sp]))
+				range = range * 10 + msg[sp] - '0', ++sp;
+			if (msg[sp] != 'h'&&msg[sp] != '\0')
+				return EVENT_IGNORE;
+			if (range > 100)
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "*超出范围！范围：1 - 100");
+				return EVENT_BLOCK;
+			}
+			if (num > 10)
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "*骰子太多了！最多十个哦？");
+				return EVENT_BLOCK;
+			}
+			if (msg[sp] != 'h')
+				CQ_sendGroupMsg(ac, fromGroup, rDice(fromQQ, range, num, fromGroup));
+			else
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "暗骰结果已发送至私聊\0");
+				CQ_sendPrivateMsg(ac, fromQQ, rDice(fromQQ, range, num, fromGroup));
+			}
+			return EVENT_BLOCK;
+		}
+		if (msg[sp] == 'h'&&msg[sp + 1] == 'e'&&msg[sp + 2] == 'l'&&msg[sp + 3] == 'p'&&msg[sp + 4] == '\0')
+		{
+			atme(fromQQ);
+			ret += "已发送至私聊，请到私聊查看！";
+			CQ_sendGroupMsg(ac, fromGroup, ret.data());
+			CQ_sendPrivateMsg(ac, fromQQ, help.data());
+		}
 	}
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
