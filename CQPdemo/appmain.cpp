@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 * CoolQ Demo for VC++ 
 * Api Version 9
 * Written by Coxxs & Thanks for the help of orzFly
@@ -7,7 +7,7 @@
 #include "stdafx.h"
 #include "string"
 #include "cqp.h"
-#include "appmain.h" //Ó¦ÓÃAppIDµÈĞÅÏ¢£¬ÇëÕıÈ·ÌîĞ´£¬·ñÔò¿áQ¿ÉÄÜÎŞ·¨¼ÓÔØ
+#include "appmain.h" //åº”ç”¨AppIDç­‰ä¿¡æ¯ï¼Œè¯·æ­£ç¡®å¡«å†™ï¼Œå¦åˆ™é…·Qå¯èƒ½æ— æ³•åŠ è½½
 
 #include "QTool.h"
 
@@ -23,12 +23,12 @@
 
 using namespace std;
 
-int ac = -1; //AuthCode µ÷ÓÃ¿áQµÄ·½·¨Ê±ĞèÒªÓÃµ½
+int ac = -1; //AuthCode è°ƒç”¨é…·Qçš„æ–¹æ³•æ—¶éœ€è¦ç”¨åˆ°
 bool enabled = false;
 
-//[CQ:at,qq=QQºÅ]
+//[CQ:at,qq=QQå·]
 
-const string help = "¡ª¡ªEmDiceÊ¹ÓÃËµÃ÷¡ª¡ª\nàÓàÓàÓàÓàÓàÓàÓàÓàÓ\n±¾botÊÇÒ»¸ö¿ªÔ´ÏîÄ¿£¬Ô´ÂëÇë×ÔĞĞgithubËÑË÷EmDiceBot\n\n[Ò»°ã¹¦ÄÜ]\n-¡¡ÖÀ÷»¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡		.r2d6\n-¡¡Ä¬ÈÏÖÀ÷»¡¡¡¡¡¡			.rd\n-¡¡°µ÷»£¨Ë½ÁÄ½á¹û£©			.rh 1d20¡¡\n-¡¡Í¶ÖÀ coc7°æÊôĞÔ£¨Ë½ÁÄ½á¹û£©¡¡	.coc 5¡¡\n-¡¡ÉèÖÃµ±Ç°êÇ³Æ			.nn ĞÂêÇ³Æ\n-¡¡ÉèÖÃÄ¬ÈÏÖÀ÷»ÃæÊı¡¡¡¡		.d 20\n-¡¡Í¶ÖÀ´ø½±Àø÷»µÄd100¡¡¡¡¡¡		.rb\n-¡¡Í¶ÖÀ´ø³Í·£÷»µÄd100¡¡¡¡¡¡		.rp\n-¡¡±ã½İ¼¼ÄÜ¼ì¶¨¡¡¡¡¡¡¡¡¡¡¡¡		.rc\n-¡¡²é¿´½ñÈÕÔËÊÆ¡¡¡¡¡¡¡¡¡¡		.jrrp\n-¡¡²é¿´Ê¹ÓÃ°ïÖú£¨Ë½ÁÄ½á¹û£©		.help	\n\n[ÉñÃØ¹¦ÄÜ]\n.fku\n.Em\n.Emnz£¨Î´Êµ×°£©\n.Emsb£¨Î´Êµ×°£©\n\nÒÔÉÏ.¿ÉÓÃ¡£´úÌæ£¬ÇÒÑÏ¸ñÇø·Ö´óĞ¡Ğ´¡£Ä¿Ç°±¾botÔİÊ±Ö»ÄÜÔÚÌÖÂÛ×éÊ¹ÓÃ¡£";
+const string help = "â€”â€”EmDiceä½¿ç”¨è¯´æ˜â€”â€”\nå˜¤å˜¤å˜¤å˜¤å˜¤å˜¤å˜¤å˜¤å˜¤\næœ¬botæ˜¯ä¸€ä¸ªå¼€æºé¡¹ç›®ï¼Œæºç è¯·è‡ªè¡Œgithubæœç´¢EmDiceBot\n\n[ä¸€èˆ¬åŠŸèƒ½]\n-ã€€æ·éª°ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€		.r2d6\n-ã€€é»˜è®¤æ·éª°ã€€ã€€ã€€			.rd\n-ã€€æš—éª°ï¼ˆç§èŠç»“æœï¼‰			.rh 1d20ã€€\n-ã€€æŠ•æ· coc7ç‰ˆå±æ€§ï¼ˆç§èŠç»“æœï¼‰ã€€	.coc 5ã€€\n-ã€€è®¾ç½®å½“å‰æ˜µç§°			.nn æ–°æ˜µç§°\n-ã€€è®¾ç½®é»˜è®¤æ·éª°é¢æ•°ã€€ã€€		.d 20\n-ã€€æŠ•æ·å¸¦å¥–åŠ±éª°çš„d100ã€€ã€€ã€€		.rb\n-ã€€æŠ•æ·å¸¦æƒ©ç½šéª°çš„d100ã€€ã€€ã€€		.rp\n-ã€€ä¾¿æ·æŠ€èƒ½æ£€å®šã€€ã€€ã€€ã€€ã€€ã€€		.rc\n-ã€€æŸ¥çœ‹ä»Šæ—¥è¿åŠ¿ã€€ã€€ã€€ã€€ã€€		.jrrp\n-ã€€æŸ¥çœ‹ä½¿ç”¨å¸®åŠ©ï¼ˆç§èŠç»“æœï¼‰		.help	\n\n[ç¥ç§˜åŠŸèƒ½]\n.fku\n.Em\n.Emnzï¼ˆæœªå®è£…ï¼‰\n.Emsbï¼ˆæœªå®è£…ï¼‰\n\nä»¥ä¸Š.å¯ç”¨ã€‚ä»£æ›¿ï¼Œä¸”ä¸¥æ ¼åŒºåˆ†å¤§å°å†™ã€‚";
 
 struct jrrp
 {
@@ -51,7 +51,7 @@ string ret;
 tm local;
 time_t now;
 
-const string coc7[] = { "Á¦Á¿", "Ãô½İ", "ÌåÖÊ", "Íâ±í", "ÒâÖ¾", "ÖÇÁ¦", "ÌåĞÍ", "½ÌÓı", "ĞÒÔË" };
+const string coc7[] = { "åŠ›é‡", "æ•æ·", "ä½“è´¨", "å¤–è¡¨", "æ„å¿—", "æ™ºåŠ›", "ä½“å‹", "æ•™è‚²", "å¹¸è¿" };
 
 //int32_t record[120];
 
@@ -206,10 +206,10 @@ const char* nnDelete(int64_t fromQQ)
 {
 	atme(fromQQ);
 	if (!name.count(fromQQ))
-		ret += "ÄúÎ´ÉèÖÃêÇ³Æ£¬ÎŞ·¨Çå³ı£¡";
+		ret += "æ‚¨æœªè®¾ç½®æ˜µç§°ï¼Œæ— æ³•æ¸…é™¤ï¼";
 	else
 	{
-		ret += "ÄúÒÑÇå³ı×Ô¼ºµÄêÇ³Æ£¡";
+		ret += "æ‚¨å·²æ¸…é™¤è‡ªå·±çš„æ˜µç§°ï¼";
 		name.erase(fromQQ);
 	}
 	return ret.data();
@@ -218,7 +218,7 @@ const char* nnDelete(int64_t fromQQ)
 const char* nnAdd(int64_t fromQQ, string newname)
 {
 	atme(fromQQ);
-	ret += "µÄĞÂêÇ³ÆÊÇ£º";
+	ret += "çš„æ–°æ˜µç§°æ˜¯ï¼š";
 	ret += newname;
 	name[fromQQ] = newname;
 	return ret.data();
@@ -253,7 +253,7 @@ void atname(int64_t fromQQ, int64_t fromGroup)
 	{
 		CQ_Type_GroupMember tmp;
 		Turn.GetGroupMemberInfo(ac, fromGroup, fromQQ, tmp);
-		ret += tmp.nick;
+		ret += (tmp.nick.empty() ? tmp.username : tmp.nick);
 	}
 }
 
@@ -263,11 +263,11 @@ const char* getjrrp(int64_t fromQQ, int64_t fromGroup=0)
 		atname(fromQQ);
 	else
 		atname(fromQQ, fromGroup);
-	ret += " ½ñÌìµÄÔËÊÆÖ¸ÊıÊÇ ";
+	ret += " ä»Šå¤©çš„è¿åŠ¿æŒ‡æ•°æ˜¯ ";
 	char tmp[7];
 	_i64toa_s(jrrpmap[fromQQ].jrrp, tmp, 7, 10);
 	ret += tmp;
-	ret += "%£¡";
+	ret += "%ï¼";
 	for (int i = 1; i <= min(jrrpmap[fromQQ].jrrp,100); ++i)
 		ret += '|';
 	return ret.data();
@@ -280,18 +280,18 @@ const char* rDice(int64_t fromQQ, int32_t range, int32_t num, int64_t fromGroup=
 	range = (range == 0) ? ((defaultDice.count(fromQQ)) ? defaultDice[fromQQ] : 100) : range;
 	num = (num == 0) ? 1 : num;
 	uniform_int_distribution<> u(1, range);
-	//Ê¹ÓÃu(mt)µ÷È¡Ëæ»úÊı
+	//ä½¿ç”¨u(mt)è°ƒå–éšæœºæ•°
 	if(fromGroup==0)
 		atname(fromQQ);
 	else
 		atname(fromQQ, fromGroup);
-	ret += " Í¶ÖÀ ";
+	ret += " æŠ•æ· ";
 	_i64toa_s(num, tmp, 12, 10);
 	ret += tmp;
 	ret += "d";
 	_i64toa_s(range, tmp, 12, 10);
 	ret += tmp;
-	ret += "£º";
+	ret += "ï¼š";
 	for (int32_t i = 1; i <= num; ++i)
 	{
 		int32_t cut = u(mt);
@@ -299,7 +299,7 @@ const char* rDice(int64_t fromQQ, int32_t range, int32_t num, int64_t fromGroup=
 		_i64toa_s(cut, tmp, 12, 10);
 		ret += tmp;
 		if (i != num)
-			ret += "¡¢";
+			ret += "ã€";
 	}
 	if (num != 1)
 	{
@@ -311,7 +311,7 @@ const char* rDice(int64_t fromQQ, int32_t range, int32_t num, int64_t fromGroup=
 }
 
 /* 
-* ·µ»ØÓ¦ÓÃµÄApiVer¡¢Appid£¬´ò°üºó½«²»»áµ÷ÓÃ
+* è¿”å›åº”ç”¨çš„ApiVerã€Appidï¼Œæ‰“åŒ…åå°†ä¸ä¼šè°ƒç”¨
 */
 CQEVENT(const char*, AppInfo, 0)() {
 	return CQAPPINFO;
@@ -319,8 +319,8 @@ CQEVENT(const char*, AppInfo, 0)() {
 
 
 /* 
-* ½ÓÊÕÓ¦ÓÃAuthCode£¬¿áQ¶ÁÈ¡Ó¦ÓÃĞÅÏ¢ºó£¬Èç¹û½ÓÊÜ¸ÃÓ¦ÓÃ£¬½«»áµ÷ÓÃÕâ¸öº¯Êı²¢´«µİAuthCode¡£
-* ²»ÒªÔÚ±¾º¯Êı´¦ÀíÆäËûÈÎºÎ´úÂë£¬ÒÔÃâ·¢ÉúÒì³£Çé¿ö¡£ÈçĞèÖ´ĞĞ³õÊ¼»¯´úÂëÇëÔÚStartupÊÂ¼şÖĞÖ´ĞĞ£¨Type=1001£©¡£
+* æ¥æ”¶åº”ç”¨AuthCodeï¼Œé…·Qè¯»å–åº”ç”¨ä¿¡æ¯åï¼Œå¦‚æœæ¥å—è¯¥åº”ç”¨ï¼Œå°†ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°å¹¶ä¼ é€’AuthCodeã€‚
+* ä¸è¦åœ¨æœ¬å‡½æ•°å¤„ç†å…¶ä»–ä»»ä½•ä»£ç ï¼Œä»¥å…å‘ç”Ÿå¼‚å¸¸æƒ…å†µã€‚å¦‚éœ€æ‰§è¡Œåˆå§‹åŒ–ä»£ç è¯·åœ¨Startupäº‹ä»¶ä¸­æ‰§è¡Œï¼ˆType=1001ï¼‰ã€‚
 */
 CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 	ac = AuthCode;
@@ -329,9 +329,9 @@ CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 
 
 /*
-* Type=1001 ¿áQÆô¶¯
-* ÎŞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬±¾º¯Êı¶¼»áÔÚ¿áQÆô¶¯ºóÖ´ĞĞÒ»´Î£¬ÇëÔÚÕâÀïÖ´ĞĞÓ¦ÓÃ³õÊ¼»¯´úÂë¡£
-* Èç·Ç±ØÒª£¬²»½¨ÒéÔÚÕâÀï¼ÓÔØ´°¿Ú¡££¨¿ÉÒÔÌí¼Ó²Ëµ¥£¬ÈÃÓÃ»§ÊÖ¶¯´ò¿ª´°¿Ú£©
+* Type=1001 é…·Qå¯åŠ¨
+* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œæœ¬å‡½æ•°éƒ½ä¼šåœ¨é…·Qå¯åŠ¨åæ‰§è¡Œä¸€æ¬¡ï¼Œè¯·åœ¨è¿™é‡Œæ‰§è¡Œåº”ç”¨åˆå§‹åŒ–ä»£ç ã€‚
+* å¦‚éå¿…è¦ï¼Œä¸å»ºè®®åœ¨è¿™é‡ŒåŠ è½½çª—å£ã€‚ï¼ˆå¯ä»¥æ·»åŠ èœå•ï¼Œè®©ç”¨æˆ·æ‰‹åŠ¨æ‰“å¼€çª—å£ï¼‰
 */
 CQEVENT(int32_t, __eventStartup, 0)() {
 	load();
@@ -340,9 +340,9 @@ CQEVENT(int32_t, __eventStartup, 0)() {
 
 
 /*
-* Type=1002 ¿áQÍË³ö
-* ÎŞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬±¾º¯Êı¶¼»áÔÚ¿áQÍË³öÇ°Ö´ĞĞÒ»´Î£¬ÇëÔÚÕâÀïÖ´ĞĞ²å¼ş¹Ø±Õ´úÂë¡£
-* ±¾º¯Êıµ÷ÓÃÍê±Ïºó£¬¿áQ½«ºÜ¿ì¹Ø±Õ£¬Çë²»ÒªÔÙÍ¨¹ıÏß³ÌµÈ·½Ê½Ö´ĞĞÆäËû´úÂë¡£
+* Type=1002 é…·Qé€€å‡º
+* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œæœ¬å‡½æ•°éƒ½ä¼šåœ¨é…·Qé€€å‡ºå‰æ‰§è¡Œä¸€æ¬¡ï¼Œè¯·åœ¨è¿™é‡Œæ‰§è¡Œæ’ä»¶å…³é—­ä»£ç ã€‚
+* æœ¬å‡½æ•°è°ƒç”¨å®Œæ¯•åï¼Œé…·Qå°†å¾ˆå¿«å…³é—­ï¼Œè¯·ä¸è¦å†é€šè¿‡çº¿ç¨‹ç­‰æ–¹å¼æ‰§è¡Œå…¶ä»–ä»£ç ã€‚
 */
 CQEVENT(int32_t, __eventExit, 0)() {
 	save();
@@ -350,10 +350,10 @@ CQEVENT(int32_t, __eventExit, 0)() {
 }
 
 /*
-* Type=1003 Ó¦ÓÃÒÑ±»ÆôÓÃ
-* µ±Ó¦ÓÃ±»ÆôÓÃºó£¬½«ÊÕµ½´ËÊÂ¼ş¡£
-* Èç¹û¿áQÔØÈëÊ±Ó¦ÓÃÒÑ±»ÆôÓÃ£¬ÔòÔÚ_eventStartup(Type=1001,¿áQÆô¶¯)±»µ÷ÓÃºó£¬±¾º¯ÊıÒ²½«±»µ÷ÓÃÒ»´Î¡£
-* Èç·Ç±ØÒª£¬²»½¨ÒéÔÚÕâÀï¼ÓÔØ´°¿Ú¡££¨¿ÉÒÔÌí¼Ó²Ëµ¥£¬ÈÃÓÃ»§ÊÖ¶¯´ò¿ª´°¿Ú£©
+* Type=1003 åº”ç”¨å·²è¢«å¯ç”¨
+* å½“åº”ç”¨è¢«å¯ç”¨åï¼Œå°†æ”¶åˆ°æ­¤äº‹ä»¶ã€‚
+* å¦‚æœé…·Qè½½å…¥æ—¶åº”ç”¨å·²è¢«å¯ç”¨ï¼Œåˆ™åœ¨_eventStartup(Type=1001,é…·Qå¯åŠ¨)è¢«è°ƒç”¨åï¼Œæœ¬å‡½æ•°ä¹Ÿå°†è¢«è°ƒç”¨ä¸€æ¬¡ã€‚
+* å¦‚éå¿…è¦ï¼Œä¸å»ºè®®åœ¨è¿™é‡ŒåŠ è½½çª—å£ã€‚ï¼ˆå¯ä»¥æ·»åŠ èœå•ï¼Œè®©ç”¨æˆ·æ‰‹åŠ¨æ‰“å¼€çª—å£ï¼‰
 */
 CQEVENT(int32_t, __eventEnable, 0)() {
 	load();
@@ -363,10 +363,10 @@ CQEVENT(int32_t, __eventEnable, 0)() {
 
 
 /*
-* Type=1004 Ó¦ÓÃ½«±»Í£ÓÃ
-* µ±Ó¦ÓÃ±»Í£ÓÃÇ°£¬½«ÊÕµ½´ËÊÂ¼ş¡£
-* Èç¹û¿áQÔØÈëÊ±Ó¦ÓÃÒÑ±»Í£ÓÃ£¬Ôò±¾º¯Êı*²»»á*±»µ÷ÓÃ¡£
-* ÎŞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬¿áQ¹Ø±ÕÇ°±¾º¯Êı¶¼*²»»á*±»µ÷ÓÃ¡£
+* Type=1004 åº”ç”¨å°†è¢«åœç”¨
+* å½“åº”ç”¨è¢«åœç”¨å‰ï¼Œå°†æ”¶åˆ°æ­¤äº‹ä»¶ã€‚
+* å¦‚æœé…·Qè½½å…¥æ—¶åº”ç”¨å·²è¢«åœç”¨ï¼Œåˆ™æœ¬å‡½æ•°*ä¸ä¼š*è¢«è°ƒç”¨ã€‚
+* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œé…·Qå…³é—­å‰æœ¬å‡½æ•°éƒ½*ä¸ä¼š*è¢«è°ƒç”¨ã€‚
 */
 CQEVENT(int32_t, __eventDisable, 0)() {
 	save();
@@ -376,8 +376,8 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 
 
 /*
-* Type=21 Ë½ÁÄÏûÏ¢
-* subType ×ÓÀàĞÍ£¬11/À´×ÔºÃÓÑ 1/À´×ÔÔÚÏß×´Ì¬ 2/À´×ÔÈº 3/À´×ÔÌÖÂÛ×é
+* Type=21 ç§èŠæ¶ˆæ¯
+* subType å­ç±»å‹ï¼Œ11/æ¥è‡ªå¥½å‹ 1/æ¥è‡ªåœ¨çº¿çŠ¶æ€ 2/æ¥è‡ªç¾¤ 3/æ¥è‡ªè®¨è®ºç»„
 */
 CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t fromQQ, const char *msg, int32_t font) {
 	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))
@@ -390,31 +390,31 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 		if (msg[sp] == 's'&&msg[sp + 1] == 'a'&&msg[sp + 2] == 'v'&&msg[sp + 3] == 'e'&&msg[sp + 4] == '\0'&&admin.count(fromQQ))
 		{
 			save();
-			CQ_sendPrivateMsg(ac, fromQQ, "*±£´æÍê±Ï");
+			CQ_sendPrivateMsg(ac, fromQQ, "*ä¿å­˜å®Œæ¯•");
 		}
 		if (msg[sp] == 'l'&&msg[sp + 1] == 'o'&&msg[sp + 2] == 'a'&&msg[sp + 3] == 'd'&&msg[sp + 4] == '\0'&&admin.count(fromQQ))
 		{
 			load();
-			CQ_sendPrivateMsg(ac, fromQQ, "*¶ÁÈ¡Íê±Ï");
+			CQ_sendPrivateMsg(ac, fromQQ, "*è¯»å–å®Œæ¯•");
 		}
 	}
-	//Èç¹ûÒª»Ø¸´ÏûÏ¢£¬Çëµ÷ÓÃ¿áQ·½·¨·¢ËÍ£¬²¢ÇÒÕâÀï return EVENT_BLOCK - ½Ø¶Ï±¾ÌõÏûÏ¢£¬²»ÔÙ¼ÌĞø´¦Àí  ×¢Òâ£ºÓ¦ÓÃÓÅÏÈ¼¶ÉèÖÃÎª"×î¸ß"(10000)Ê±£¬²»µÃÊ¹ÓÃ±¾·µ»ØÖµ
-	//Èç¹û²»»Ø¸´ÏûÏ¢£¬½»ÓÉÖ®ºóµÄÓ¦ÓÃ/¹ıÂËÆ÷´¦Àí£¬ÕâÀï return EVENT_IGNORE - ºöÂÔ±¾ÌõÏûÏ¢
+	//å¦‚æœè¦å›å¤æ¶ˆæ¯ï¼Œè¯·è°ƒç”¨é…·Qæ–¹æ³•å‘é€ï¼Œå¹¶ä¸”è¿™é‡Œ return EVENT_BLOCK - æˆªæ–­æœ¬æ¡æ¶ˆæ¯ï¼Œä¸å†ç»§ç»­å¤„ç†  æ³¨æ„ï¼šåº”ç”¨ä¼˜å…ˆçº§è®¾ç½®ä¸º"æœ€é«˜"(10000)æ—¶ï¼Œä¸å¾—ä½¿ç”¨æœ¬è¿”å›å€¼
+	//å¦‚æœä¸å›å¤æ¶ˆæ¯ï¼Œäº¤ç”±ä¹‹åçš„åº”ç”¨/è¿‡æ»¤å™¨å¤„ç†ï¼Œè¿™é‡Œ return EVENT_IGNORE - å¿½ç•¥æœ¬æ¡æ¶ˆæ¯
 	return EVENT_IGNORE;
 }
 
 
 /*
-* Type=2 ÈºÏûÏ¢
+* Type=2 ç¾¤æ¶ˆæ¯
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))//ÅĞ¶ÏÊÇ·ñÎªÃüÁî
+	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))//åˆ¤æ–­æ˜¯å¦ä¸ºå‘½ä»¤
 	{
 		int32_t sp = 2;
 		if (msg[0] == '.')
 			sp = 1;
 
-		if (msg[sp] == 'f'&&msg[sp + 1] == 'k'&&msg[sp + 2] == 'u'&&msg[sp + 3] == '\0')//¡£fku
+		if (msg[sp] == 'f'&&msg[sp + 1] == 'k'&&msg[sp + 2] == 'u'&&msg[sp + 3] == '\0')//ã€‚fku
 		{
 /*			test();
 			for (int i = 1; i <= 100; ++i)
@@ -427,7 +427,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'E'&&msg[sp + 1] == 'm'&&msg[sp + 2] == '\0')//¡£Em
+		if (msg[sp] == 'E'&&msg[sp + 1] == 'm'&&msg[sp + 2] == '\0')//ã€‚Em
 		{
 			CQ_sendGroupMsg(ac, fromGroup, "*EmDice Alive");
 			return EVENT_BLOCK;
@@ -440,7 +440,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'n'&&msg[sp + 1] == 'n')//¡£nnÏµÁĞ
+		if (msg[sp] == 'n'&&msg[sp + 1] == 'n')//ã€‚nnç³»åˆ—
 		{
 			sp += 2;
 			while (msg[sp] == ' ')
@@ -457,14 +457,14 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'd')//¡£dÄ¬ÈÏ÷»×Ó
+		if (msg[sp] == 'd')//ã€‚dé»˜è®¤éª°å­
 		{
 			++sp;
 			atname(fromQQ, fromGroup);
 			if (msg[sp] == '\0')
 			{
 				defaultDice[fromQQ] = 100;
-				ret += " »Ö¸´Ä¬ÈÏÉèÖÃ100";
+				ret += " æ¢å¤é»˜è®¤è®¾ç½®100";
 				CQ_sendGroupMsg(ac, fromGroup, ret.data());
 				return EVENT_BLOCK;
 			}
@@ -475,7 +475,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 				return EVENT_IGNORE;
 			if (endp - sp > 3)
 			{
-				ret += " ÉèÖÃÊ§°Ü£¬³¬³ö·¶Î§£¡·¶Î§£º1 - 100£¡";
+				ret += " è®¾ç½®å¤±è´¥ï¼Œè¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 100ï¼";
 				CQ_sendGroupMsg(ac, fromGroup, ret.data());
 				return EVENT_BLOCK;
 			}
@@ -484,14 +484,14 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 				diceNum = diceNum * 10 + msg[sp] - '0';
 			if (diceNum > 100 || diceNum == 0)
 			{
-				ret += " ÉèÖÃÊ§°Ü£¬³¬³ö·¶Î§£¡·¶Î§£º1 - 100£¡";
+				ret += " è®¾ç½®å¤±è´¥ï¼Œè¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 100ï¼";
 				CQ_sendGroupMsg(ac, fromGroup, ret.data());
 				return EVENT_BLOCK;
 			}
 			defaultDice[fromQQ] = diceNum;
 			char tmp[6];
 			_i64toa_s(diceNum, tmp, 6, 10);
-			ret += " ÉèÖÃÄ¬ÈÏ÷»×ÓÎª";
+			ret += " è®¾ç½®é»˜è®¤éª°å­ä¸º";
 			ret += tmp;
 			CQ_sendGroupMsg(ac, fromGroup, ret.data());
 			return EVENT_BLOCK;
@@ -504,25 +504,25 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 			char tmp[6];
 			atname(fromQQ, fromGroup);
 			uniform_int_distribution<> u(1, 6);
-			ret += " Í¶ÖÀCOC 7°æ ÊôĞÔ£º\n";
+			ret += " æŠ•æ·COC 7ç‰ˆ å±æ€§ï¼š\n";
 			while (msg[sp] == ' ')
 				++sp;
 			if (isdigit(msg[sp]))
 				times = msg[sp] - '0', ++sp;
 			if (isdigit(msg[sp]))
 			{
-				CQ_sendGroupMsg(ac, fromGroup, "*³¬³ö·¶Î§£¡·¶Î§£º1 - 5");
+				CQ_sendGroupMsg(ac, fromGroup, "*è¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 5");
 				return EVENT_BLOCK;
 			}
 			if (times > 5)
 			{
-				CQ_sendGroupMsg(ac, fromGroup, "*³¬³ö·¶Î§£¡·¶Î§£º1 - 5");
+				CQ_sendGroupMsg(ac, fromGroup, "*è¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 5");
 				return EVENT_BLOCK;
 			}
 			if (times == 0)
 				++times;
-			for (int32_t i = 1; i <= times; ++i)//Á¦Á¿ Ãô½İ ÌåÖÊ Íâ±í ÒâÖ¾ ÖÇÁ¦ ÌåĞÍ ½ÌÓı ĞÒÔË
-				//Á¦Á¿ Ãô½İ ÌåÖÊ Íâ±í ÒâÖ¾ ĞÒÔËÎª3d6ÔÙ³ËÒÔ5£¬ÖÇÁ¦ ÌåĞÍ ½ÌÓıÎª2d6+6ÔÙ³ËÒÔ5
+			for (int32_t i = 1; i <= times; ++i)//åŠ›é‡ æ•æ· ä½“è´¨ å¤–è¡¨ æ„å¿— æ™ºåŠ› ä½“å‹ æ•™è‚² å¹¸è¿
+				//åŠ›é‡ æ•æ· ä½“è´¨ å¤–è¡¨ æ„å¿— å¹¸è¿ä¸º3d6å†ä¹˜ä»¥5ï¼Œæ™ºåŠ› ä½“å‹ æ•™è‚²ä¸º2d6+6å†ä¹˜ä»¥5
 			{
 				int32_t quality[10] = { (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + u(mt)) * 5 };
 				quality[9] = quality[0] + quality[1] + quality[2] + quality[3] + quality[4] + quality[5] + quality[6] + quality[7];
@@ -535,7 +535,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 					if (i != 8)
 						ret += ' ';
 				}
-				ret += "\n×ÜºÍ£º";
+				ret += "\næ€»å’Œï¼š";
 				_i64toa_s(quality[9], tmp, 6, 10);
 				ret += tmp;
 				ret += " + ";
@@ -546,16 +546,16 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 			}
 			string toQQ = ret;
 			atme(fromQQ);
-			ret += " ÒÑ·¢ËÍÖÁË½ÁÄ£¬Çëµ½Ë½ÁÄ²é¿´£¡";
+			ret += " å·²å‘é€è‡³ç§èŠï¼Œè¯·åˆ°ç§èŠæŸ¥çœ‹ï¼";
 			CQ_sendGroupMsg(ac, fromGroup, ret.data());
 			CQ_sendPrivateMsg(ac, fromQQ, toQQ.data());
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'r')//ÈÓ÷»×Ó
+		if (msg[sp] == 'r')//æ‰”éª°å­
 		{
 			++sp;
-			if ((msg[sp] == 'c'))//rc¼¼ÄÜ¼ì¶¨
+			if ((msg[sp] == 'c'))//rcæŠ€èƒ½æ£€å®š
 			{
 				char tmp[6];
 				++sp;
@@ -563,7 +563,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 				uniform_int_distribution<> u(1, 100);
 				int32_t result = u(mt), can=0;
 				_i64toa_s(result, tmp, 6, 10);
-				ret += " ½øĞĞ¼¼ÄÜ¼ì¶¨£º";
+				ret += " è¿›è¡ŒæŠ€èƒ½æ£€å®šï¼š";
 				ret += tmp;
 				ret += " ";
 				while (msg[sp] == ' ')
@@ -575,34 +575,34 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 				while (isdigit(msg[sp]))
 					can = can * 10 + msg[sp] - '0', ++sp;
 				if (result == 1)
-					ret += " ´ó³É¹¦£¡";
+					ret += " å¤§æˆåŠŸï¼";
 				else if (result == 100)
-					ret += "´óÊ§°Ü¡£";
+					ret += "å¤§å¤±è´¥ã€‚";
 				else if (result <= can / 5)
-					ret += " ¼«ÄÑ³É¹¦£¡";
+					ret += " æéš¾æˆåŠŸï¼";
 				else if (result <= can / 2)
-					ret += " À§ÄÑ³É¹¦£¡";
+					ret += " å›°éš¾æˆåŠŸï¼";
 				else if (result <= can)
-					ret += " ³£¹æ³É¹¦£¡";
+					ret += " å¸¸è§„æˆåŠŸï¼";
 				else if (result >= 96 && can < 50)
-					ret += " ´óÊ§°Ü¡£";
-				else ret += " Î´Í¨¹ı¡£";
+					ret += " å¤§å¤±è´¥ã€‚";
+				else ret += " æœªé€šè¿‡ã€‚";
 				CQ_sendGroupMsg(ac, fromGroup, ret.data());
 				return EVENT_BLOCK;
 			}
-			if ((msg[sp] == 'b' || msg[sp] == 'p') && msg[sp + 1] == '\0')//b=½±Àø p=³Í·£
+			if ((msg[sp] == 'b' || msg[sp] == 'p') && msg[sp + 1] == '\0')//b=å¥–åŠ± p=æƒ©ç½š
 			{
 				char tmp[6];
 				atname(fromQQ, fromGroup);
 				uniform_int_distribution<> u(1, 100);
 				int32_t d100 = u(mt), d10 = u(mt) % 10, m10 = d100 % 10, m100 = (d100 - m10) / 10;
 				++d10;
-				ret += " Í¶ÖÀ";
-				ret += (msg[sp] == 'b') ? "½±Àø" : "³Í·£";
-				ret += "÷»£º";
+				ret += " æŠ•æ·";
+				ret += (msg[sp] == 'b') ? "å¥–åŠ±" : "æƒ©ç½š";
+				ret += "éª°ï¼š";
 				_i64toa_s(d100, tmp, 6, 10);
 				ret += tmp;
-				ret += "¡¢";
+				ret += "ã€";
 				_i64toa_s(d10, tmp, 6, 10);
 				ret += tmp;
 				if (m10 != 0 && d10 == 10)
@@ -627,19 +627,19 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 				return EVENT_IGNORE;
 			if (range > 100)
 			{
-				CQ_sendGroupMsg(ac, fromGroup, "*³¬³ö·¶Î§£¡·¶Î§£º1 - 100");
+				CQ_sendGroupMsg(ac, fromGroup, "*è¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 100");
 				return EVENT_BLOCK;
 			}
 			if (num > 10)
 			{
-				CQ_sendGroupMsg(ac, fromGroup, "*÷»×ÓÌ«¶àÁË£¡×î¶àÊ®¸öÅ¶£¿");
+				CQ_sendGroupMsg(ac, fromGroup, "*éª°å­å¤ªå¤šäº†ï¼æœ€å¤šåä¸ªå“¦ï¼Ÿ");
 				return EVENT_BLOCK;
 			}
 			if (msg[sp] != 'h')
 				CQ_sendGroupMsg(ac, fromGroup, rDice(fromQQ, range, num, fromGroup));
 			else
 			{
-				CQ_sendGroupMsg(ac, fromGroup, "°µ÷»½á¹ûÒÑ·¢ËÍÖÁË½ÁÄ\0");
+				CQ_sendGroupMsg(ac, fromGroup, "æš—éª°ç»“æœå·²å‘é€è‡³ç§èŠ\0");
 				CQ_sendPrivateMsg(ac, fromQQ, rDice(fromQQ, range, num, fromGroup));
 			}
 			return EVENT_BLOCK;
@@ -647,26 +647,26 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 		if (msg[sp] == 'h'&&msg[sp + 1] == 'e'&&msg[sp + 2] == 'l'&&msg[sp + 3] == 'p'&&msg[sp + 4] == '\0')
 		{
 			atme(fromQQ);
-			ret += "ÒÑ·¢ËÍÖÁË½ÁÄ£¬Çëµ½Ë½ÁÄ²é¿´£¡";
+			ret += "å·²å‘é€è‡³ç§èŠï¼Œè¯·åˆ°ç§èŠæŸ¥çœ‹ï¼";
 			CQ_sendGroupMsg(ac, fromGroup, ret.data());
 			CQ_sendPrivateMsg(ac, fromQQ, help.data());
 		}
 	}
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=4 ÌÖÂÛ×éÏûÏ¢
+* Type=4 è®¨è®ºç»„æ¶ˆæ¯
 */
 CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t fromDiscuss, int64_t fromQQ, const char *msg, int32_t font) {
-	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))//ÅĞ¶ÏÊÇ·ñÎªÃüÁî
+	if (msg[0] == '.' || (msg[0] == -95 && msg[1] == -93))//åˆ¤æ–­æ˜¯å¦ä¸ºå‘½ä»¤
 	{
 		int32_t sp = 2;
 		if (msg[0] == '.')
 			sp = 1;
 
-		if (msg[sp] == 'f'&&msg[sp + 1] == 'k'&&msg[sp + 2] == 'u'&&msg[sp + 3] == '\0')//¡£fku
+		if (msg[sp] == 'f'&&msg[sp + 1] == 'k'&&msg[sp + 2] == 'u'&&msg[sp + 3] == '\0')//ã€‚fku
 		{
 /*			test();
 			for (int i = 1; i <= 100; ++i)
@@ -679,7 +679,7 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'E'&&msg[sp + 1] == 'm'&&msg[sp + 2] == '\0')//¡£Em
+		if (msg[sp] == 'E'&&msg[sp + 1] == 'm'&&msg[sp + 2] == '\0')//ã€‚Em
 		{
 			CQ_sendDiscussMsg(ac, fromDiscuss, "*EmDice Alive");
 			return EVENT_BLOCK;
@@ -692,7 +692,7 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'n'&&msg[sp + 1] == 'n')//¡£nnÏµÁĞ
+		if (msg[sp] == 'n'&&msg[sp + 1] == 'n')//ã€‚nnç³»åˆ—
 		{
 			sp += 2;
 			while (msg[sp] == ' ')
@@ -709,14 +709,14 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'd')//¡£dÄ¬ÈÏ÷»×Ó
+		if (msg[sp] == 'd')//ã€‚dé»˜è®¤éª°å­
 		{
 			++sp;
 			atname(fromQQ);
 			if (msg[sp] == '\0')
 			{
 				defaultDice[fromQQ] = 100;
-				ret += " »Ö¸´Ä¬ÈÏÉèÖÃ100";
+				ret += " æ¢å¤é»˜è®¤è®¾ç½®100";
 				CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 				return EVENT_BLOCK;
 			}
@@ -727,7 +727,7 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 				return EVENT_IGNORE;
 			if (endp - sp > 3)
 			{
-				ret += " ÉèÖÃÊ§°Ü£¬³¬³ö·¶Î§£¡·¶Î§£º1 - 100£¡";
+				ret += " è®¾ç½®å¤±è´¥ï¼Œè¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 100ï¼";
 				CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 				return EVENT_BLOCK;
 			}
@@ -736,14 +736,14 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 				diceNum = diceNum * 10 + msg[sp] - '0';
 			if (diceNum > 100 || diceNum == 0)
 			{
-				ret += " ÉèÖÃÊ§°Ü£¬³¬³ö·¶Î§£¡·¶Î§£º1 - 100£¡";
+				ret += " è®¾ç½®å¤±è´¥ï¼Œè¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 100ï¼";
 				CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 				return EVENT_BLOCK;
 			}
 			defaultDice[fromQQ] = diceNum;
 			char tmp[6];
 			_i64toa_s(diceNum, tmp, 6, 10);
-			ret += " ÉèÖÃÄ¬ÈÏ÷»×ÓÎª";
+			ret += " è®¾ç½®é»˜è®¤éª°å­ä¸º";
 			ret += tmp;
 			CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 			return EVENT_BLOCK;
@@ -756,25 +756,25 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 			char tmp[6];
 			atname(fromQQ);
 			uniform_int_distribution<> u(1, 6);
-			ret += " Í¶ÖÀCOC 7°æ ÊôĞÔ£º\n";
+			ret += " æŠ•æ·COC 7ç‰ˆ å±æ€§ï¼š\n";
 			while (msg[sp] == ' ')
 				++sp;
 			if (isdigit(msg[sp]))
 				times = msg[sp] - '0', ++sp;
 			if (isdigit(msg[sp]))
 			{
-				CQ_sendDiscussMsg(ac, fromDiscuss, "*³¬³ö·¶Î§£¡·¶Î§£º1 - 5");
+				CQ_sendDiscussMsg(ac, fromDiscuss, "*è¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 5");
 				return EVENT_BLOCK;
 			}
 			if (times > 5)
 			{
-				CQ_sendDiscussMsg(ac, fromDiscuss, "*³¬³ö·¶Î§£¡·¶Î§£º1 - 5");
+				CQ_sendDiscussMsg(ac, fromDiscuss, "*è¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 5");
 				return EVENT_BLOCK;
 			}
 			if (times == 0)
 				++times;
-			for (int32_t i = 1; i <= times; ++i)//Á¦Á¿ Ãô½İ ÌåÖÊ Íâ±í ÒâÖ¾ ÖÇÁ¦ ÌåĞÍ ½ÌÓı ĞÒÔË
-				//Á¦Á¿ Ãô½İ ÌåÖÊ Íâ±í ÒâÖ¾ ĞÒÔËÎª3d6ÔÙ³ËÒÔ5£¬ÖÇÁ¦ ÌåĞÍ ½ÌÓıÎª2d6+6ÔÙ³ËÒÔ5
+			for (int32_t i = 1; i <= times; ++i)//åŠ›é‡ æ•æ· ä½“è´¨ å¤–è¡¨ æ„å¿— æ™ºåŠ› ä½“å‹ æ•™è‚² å¹¸è¿
+				//åŠ›é‡ æ•æ· ä½“è´¨ å¤–è¡¨ æ„å¿— å¹¸è¿ä¸º3d6å†ä¹˜ä»¥5ï¼Œæ™ºåŠ› ä½“å‹ æ•™è‚²ä¸º2d6+6å†ä¹˜ä»¥5
 			{
 				int32_t quality[10] = { (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + u(mt)) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + 6) * 5, (u(mt) + u(mt) + u(mt)) * 5 };
 				quality[9] = quality[0] + quality[1] + quality[2] + quality[3] + quality[4] + quality[5] + quality[6] + quality[7];
@@ -787,7 +787,7 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 					if (i != 8)
 						ret += ' ';
 				}
-				ret += "\n×ÜºÍ£º";
+				ret += "\næ€»å’Œï¼š";
 				_i64toa_s(quality[9], tmp, 6, 10);
 				ret += tmp;
 				ret += " + ";
@@ -798,16 +798,16 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 			}
 			string toQQ = ret;
 			atme(fromQQ);
-			ret += " ÒÑ·¢ËÍÖÁË½ÁÄ£¬Çëµ½Ë½ÁÄ²é¿´£¡";
+			ret += " å·²å‘é€è‡³ç§èŠï¼Œè¯·åˆ°ç§èŠæŸ¥çœ‹ï¼";
 			CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 			CQ_sendPrivateMsg(ac, fromQQ, toQQ.data());
 			return EVENT_BLOCK;
 		}
 
-		if (msg[sp] == 'r')//ÈÓ÷»×Ó
+		if (msg[sp] == 'r')//æ‰”éª°å­
 		{
 			++sp;
-			if ((msg[sp] == 'c'))//rc¼¼ÄÜ¼ì¶¨
+			if ((msg[sp] == 'c'))//rcæŠ€èƒ½æ£€å®š
 			{
 				char tmp[6];
 				++sp;
@@ -815,7 +815,7 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 				uniform_int_distribution<> u(1, 100);
 				int32_t result = u(mt), can=0;
 				_i64toa_s(result, tmp, 6, 10);
-				ret += " ½øĞĞ¼¼ÄÜ¼ì¶¨£º";
+				ret += " è¿›è¡ŒæŠ€èƒ½æ£€å®šï¼š";
 				ret += tmp;
 				ret += " ";
 				while (msg[sp] == ' ')
@@ -827,34 +827,34 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 				while (isdigit(msg[sp]))
 					can = can * 10 + msg[sp] - '0', ++sp;
 				if (result == 1)
-					ret += " ´ó³É¹¦£¡";
+					ret += " å¤§æˆåŠŸï¼";
 				else if (result == 100)
-					ret += "´óÊ§°Ü¡£";
+					ret += "å¤§å¤±è´¥ã€‚";
 				else if (result <= can / 5)
-					ret += " ¼«ÄÑ³É¹¦£¡";
+					ret += " æéš¾æˆåŠŸï¼";
 				else if (result <= can / 2)
-					ret += " À§ÄÑ³É¹¦£¡";
+					ret += " å›°éš¾æˆåŠŸï¼";
 				else if (result <= can)
-					ret += " ³£¹æ³É¹¦£¡";
+					ret += " å¸¸è§„æˆåŠŸï¼";
 				else if (result >= 96 && can < 50)
-					ret += " ´óÊ§°Ü¡£";
-				else ret += " Î´Í¨¹ı¡£";
+					ret += " å¤§å¤±è´¥ã€‚";
+				else ret += " æœªé€šè¿‡ã€‚";
 				CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 				return EVENT_BLOCK;
 			}
-			if ((msg[sp] == 'b' || msg[sp] == 'p') && msg[sp + 1] == '\0')//b=½±Àø p=³Í·£
+			if ((msg[sp] == 'b' || msg[sp] == 'p') && msg[sp + 1] == '\0')//b=å¥–åŠ± p=æƒ©ç½š
 			{
 				char tmp[6];
 				atname(fromQQ);
 				uniform_int_distribution<> u(1, 100);
 				int32_t d100 = u(mt), d10 = u(mt) % 10, m10 = d100 % 10, m100 = (d100 - m10) / 10;
 				++d10;
-				ret += " Í¶ÖÀ";
-				ret += (msg[sp] == 'b') ? "½±Àø" : "³Í·£";
-				ret += "÷»£º";
+				ret += " æŠ•æ·";
+				ret += (msg[sp] == 'b') ? "å¥–åŠ±" : "æƒ©ç½š";
+				ret += "éª°ï¼š";
 				_i64toa_s(d100, tmp, 6, 10);
 				ret += tmp;
-				ret += "¡¢";
+				ret += "ã€";
 				_i64toa_s(d10, tmp, 6, 10);
 				ret += tmp;
 				if (m10 != 0 && d10 == 10)
@@ -879,19 +879,19 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 				return EVENT_IGNORE;
 			if (range > 100)
 			{
-				CQ_sendDiscussMsg(ac, fromDiscuss, "*³¬³ö·¶Î§£¡·¶Î§£º1 - 100");
+				CQ_sendDiscussMsg(ac, fromDiscuss, "*è¶…å‡ºèŒƒå›´ï¼èŒƒå›´ï¼š1 - 100");
 				return EVENT_BLOCK;
 			}
 			if (num > 10)
 			{
-				CQ_sendDiscussMsg(ac, fromDiscuss, "*÷»×ÓÌ«¶àÁË£¡×î¶àÊ®¸öÅ¶£¿");
+				CQ_sendDiscussMsg(ac, fromDiscuss, "*éª°å­å¤ªå¤šäº†ï¼æœ€å¤šåä¸ªå“¦ï¼Ÿ");
 				return EVENT_BLOCK;
 			}
 			if (msg[sp] != 'h')
 				CQ_sendDiscussMsg(ac, fromDiscuss, rDice(fromQQ, range, num));
 			else
 			{
-				CQ_sendDiscussMsg(ac, fromDiscuss, "°µ÷»½á¹ûÒÑ·¢ËÍÖÁË½ÁÄ\0");
+				CQ_sendDiscussMsg(ac, fromDiscuss, "æš—éª°ç»“æœå·²å‘é€è‡³ç§èŠ\0");
 				CQ_sendPrivateMsg(ac, fromQQ, rDice(fromQQ, range, num));
 			}
 			return EVENT_BLOCK;
@@ -899,76 +899,76 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t msgId, int64_t 
 		if (msg[sp] == 'h'&&msg[sp + 1] == 'e'&&msg[sp + 2] == 'l'&&msg[sp + 3] == 'p'&&msg[sp + 4] == '\0')
 		{
 			atme(fromQQ);
-			ret += "ÒÑ·¢ËÍÖÁË½ÁÄ£¬Çëµ½Ë½ÁÄ²é¿´£¡";
+			ret += "å·²å‘é€è‡³ç§èŠï¼Œè¯·åˆ°ç§èŠæŸ¥çœ‹ï¼";
 			CQ_sendDiscussMsg(ac, fromDiscuss, ret.data());
 			CQ_sendPrivateMsg(ac, fromQQ, help.data());
 		}
 	}
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=101 ÈºÊÂ¼ş-¹ÜÀíÔ±±ä¶¯
-* subType ×ÓÀàĞÍ£¬1/±»È¡Ïû¹ÜÀíÔ± 2/±»ÉèÖÃ¹ÜÀíÔ±
+* Type=101 ç¾¤äº‹ä»¶-ç®¡ç†å‘˜å˜åŠ¨
+* subType å­ç±»å‹ï¼Œ1/è¢«å–æ¶ˆç®¡ç†å‘˜ 2/è¢«è®¾ç½®ç®¡ç†å‘˜
 */
 CQEVENT(int32_t, __eventSystem_GroupAdmin, 24)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t beingOperateQQ) {
 
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=102 ÈºÊÂ¼ş-Èº³ÉÔ±¼õÉÙ
-* subType ×ÓÀàĞÍ£¬1/ÈºÔ±Àë¿ª 2/ÈºÔ±±»Ìß 3/×Ô¼º(¼´µÇÂ¼ºÅ)±»Ìß
-* fromQQ ²Ù×÷ÕßQQ(½ösubTypeÎª2¡¢3Ê±´æÔÚ)
-* beingOperateQQ ±»²Ù×÷QQ
+* Type=102 ç¾¤äº‹ä»¶-ç¾¤æˆå‘˜å‡å°‘
+* subType å­ç±»å‹ï¼Œ1/ç¾¤å‘˜ç¦»å¼€ 2/ç¾¤å‘˜è¢«è¸¢ 3/è‡ªå·±(å³ç™»å½•å·)è¢«è¸¢
+* fromQQ æ“ä½œè€…QQ(ä»…subTypeä¸º2ã€3æ—¶å­˜åœ¨)
+* beingOperateQQ è¢«æ“ä½œQQ
 */
 CQEVENT(int32_t, __eventSystem_GroupMemberDecrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
 
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=103 ÈºÊÂ¼ş-Èº³ÉÔ±Ôö¼Ó
-* subType ×ÓÀàĞÍ£¬1/¹ÜÀíÔ±ÒÑÍ¬Òâ 2/¹ÜÀíÔ±ÑûÇë
-* fromQQ ²Ù×÷ÕßQQ(¼´¹ÜÀíÔ±QQ)
-* beingOperateQQ ±»²Ù×÷QQ(¼´¼ÓÈºµÄQQ)
+* Type=103 ç¾¤äº‹ä»¶-ç¾¤æˆå‘˜å¢åŠ 
+* subType å­ç±»å‹ï¼Œ1/ç®¡ç†å‘˜å·²åŒæ„ 2/ç®¡ç†å‘˜é‚€è¯·
+* fromQQ æ“ä½œè€…QQ(å³ç®¡ç†å‘˜QQ)
+* beingOperateQQ è¢«æ“ä½œQQ(å³åŠ ç¾¤çš„QQ)
 */
 CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
 
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=201 ºÃÓÑÊÂ¼ş-ºÃÓÑÒÑÌí¼Ó
+* Type=201 å¥½å‹äº‹ä»¶-å¥½å‹å·²æ·»åŠ 
 */
 CQEVENT(int32_t, __eventFriend_Add, 16)(int32_t subType, int32_t sendTime, int64_t fromQQ) {
 
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=301 ÇëÇó-ºÃÓÑÌí¼Ó
-* msg ¸½ÑÔ
-* responseFlag ·´À¡±êÊ¶(´¦ÀíÇëÇóÓÃ)
+* Type=301 è¯·æ±‚-å¥½å‹æ·»åŠ 
+* msg é™„è¨€
+* responseFlag åé¦ˆæ ‡è¯†(å¤„ç†è¯·æ±‚ç”¨)
 */
 CQEVENT(int32_t, __eventRequest_AddFriend, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, const char *responseFlag) {
 
 	CQ_setFriendAddRequest(ac, responseFlag, REQUEST_ALLOW, "");
 
-	return EVENT_BLOCK; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_BLOCK; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 
 /*
-* Type=302 ÇëÇó-ÈºÌí¼Ó
-* subType ×ÓÀàĞÍ£¬1/ËûÈËÉêÇëÈëÈº 2/×Ô¼º(¼´µÇÂ¼ºÅ)ÊÜÑûÈëÈº
-* msg ¸½ÑÔ
-* responseFlag ·´À¡±êÊ¶(´¦ÀíÇëÇóÓÃ)
+* Type=302 è¯·æ±‚-ç¾¤æ·»åŠ 
+* subType å­ç±»å‹ï¼Œ1/ä»–äººç”³è¯·å…¥ç¾¤ 2/è‡ªå·±(å³ç™»å½•å·)å—é‚€å…¥ç¾¤
+* msg é™„è¨€
+* responseFlag åé¦ˆæ ‡è¯†(å¤„ç†è¯·æ±‚ç”¨)
 */
 CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *msg, const char *responseFlag) {
 
@@ -980,24 +980,24 @@ CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime,
 		return EVENT_BLOCK;
 	}
 
-	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
+	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
 }
 
 /*
-* ²Ëµ¥£¬¿ÉÔÚ .json ÎÄ¼şÖĞÉèÖÃ²Ëµ¥ÊıÄ¿¡¢º¯ÊıÃû
-* Èç¹û²»Ê¹ÓÃ²Ëµ¥£¬ÇëÔÚ .json ¼°´Ë´¦É¾³ıÎŞÓÃ²Ëµ¥
+* èœå•ï¼Œå¯åœ¨ .json æ–‡ä»¶ä¸­è®¾ç½®èœå•æ•°ç›®ã€å‡½æ•°å
+* å¦‚æœä¸ä½¿ç”¨èœå•ï¼Œè¯·åœ¨ .json åŠæ­¤å¤„åˆ é™¤æ— ç”¨èœå•
 
 CQEVENT(int32_t, __menuA, 0)() {
-	MessageBoxA(NULL, "ÕâÊÇmenuA£¬ÔÚÕâÀïÔØÈë´°¿Ú£¬»òÕß½øĞĞÆäËû¹¤×÷¡£", "" ,0);
+	MessageBoxA(NULL, "è¿™æ˜¯menuAï¼Œåœ¨è¿™é‡Œè½½å…¥çª—å£ï¼Œæˆ–è€…è¿›è¡Œå…¶ä»–å·¥ä½œã€‚", "" ,0);
 	return 0;
 }
 */
 
 /*
 todolist:
-rdÍêÉÆ
+rdå®Œå–„
 sc
 help
 welcome
-ÈººÍË½ÁÄ
+ç¾¤å’Œç§èŠ
 */
